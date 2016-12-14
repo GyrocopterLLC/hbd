@@ -8,7 +8,7 @@
 #ifndef COMM_H_
 #define COMM_H_
 
-//#define COMM_USED
+#define COMM_USED
 
 /*################# Pin and peripheral defines #######################*/
 
@@ -35,23 +35,7 @@
  * [Start byte][Variable code][Format byte]{4 byte data payload}[Stop byte]
  */
 
-#define COMM_START_BYTE			0x0A
-#define COMM_STOP_BYTE			0x0D
-#define NUM_COMM_VARS			5 // Speed, Current, Voltage, Errors, Configuration
-
-typedef enum
-{
-	COMM_BINARY = 0,
-	COMM_CHARACTER = 'C'
-	//COMM_FLOATING_POINT = 'F'
-}Comm_FormatTypeDef;
-
-#define COMM_STATUS_RECEIVING				1
-#define COMM_STATUS_ERROR					2
-
 void comm_init(void);
-void comm_start_rx(void);
-int32_t comm_get_data(uint8_t varName);
 void comm_IRQCallback(void);
 
 #endif /* COMM_H_ */

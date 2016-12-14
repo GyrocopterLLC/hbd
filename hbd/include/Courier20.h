@@ -42,7 +42,7 @@
 #ifndef _COURIER20_H
 #define _COURIER20_H
 
-#include "stm32f0xx_hal.h"
+#include "stm32f0xx.h"
 
 #define COURIER20_WIDTH 10
 #define COURIER20_HEIGHT 18

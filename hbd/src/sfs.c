@@ -19,7 +19,7 @@
  *      Author: David Miller
  */
 
-#include "stm32f0xx_hal.h"
+#include "stm32f0xx.h"
 #include "flash_driver.h"
 #include "sfs.h"
 #include <string.h>

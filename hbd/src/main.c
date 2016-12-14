@@ -10,7 +10,7 @@
 /* Private variables ---------------------------------------------------------*/
 static __IO uint32_t tickCount = 0;
 
-TIM_HandleTypeDef app_handle;
+//TIM_HandleTypeDef app_handle;
 uint32_t main_Flags = 0;
 uint32_t main_Counter = 0;
 uint8_t rx_buf[32];

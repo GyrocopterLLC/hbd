@@ -5,7 +5,7 @@
  *      Author: David
  */
 
-#include "stm32f0xx_hal.h"
+#include "stm32f0xx.h"
 #include "main.h"
 #include "gui.h"
 #include "touchscreen.h"
@@ -117,7 +117,7 @@ GUI_RESULT gui_ButtonUpdate(GUI_BUTTON* btn)
 			// Clear the clicked flag
 			btn->state &= ~(GUI_BUTTON_CLICKED);
 			// Trigger the callback
-			if(gui_callback != NULL)
+			if(gui_callback != ((void*)0))
 				gui_callback(btn->btnid);
 		}
 

@@ -30,8 +30,6 @@ static void comm_parse_data(void);
 
 void comm_init(void)
 {
-	GPIO_InitTypeDef gi;
-
 	// Start by turning on the clocks
 	COMM_CLK_ENABLE();
 	COMM_GPIO_CLK_ENABLE();
@@ -68,8 +66,8 @@ void comm_init(void)
 	HAL_UART_Init(&comm_handle);
 
 	// Interrupt configuration
-	HAL_NVIC_SetPriority(USART1_IRQn, 2, 0);
-	HAL_NVIC_EnableIRQ(USART1_IRQn);
+	NVIC_SetPriority(USART1_IRQn, 2);
+	NVIC_EnableIRQ(USART1_IRQn);
 }
 
 void comm_start_rx(void)

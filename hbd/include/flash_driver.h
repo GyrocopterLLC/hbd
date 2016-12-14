@@ -33,6 +33,7 @@
 #define FLASH_SPI_PORT		GPIOB
 #define FLASH_CS_PIN		15//GPIO_PIN_15
 #define FLASH_CS_PORT		GPIOA
+#define FLASH_AF			((uint8_t)0x00)
 
 //#define MISO_MODE_MASK		(0x03 << (SPI_MISO_PINSRC*2))
 //#define MISO_MODE_GPI		(0x01 << (SPI_MISO_PINSRC*2))

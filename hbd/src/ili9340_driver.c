@@ -9,7 +9,7 @@
  *
  */
 
-#include "stm32f0xx_hal.h"
+#include "stm32f0xx.h"
 #include "ili9340_driver.h"
 #include "gpio.h"
  

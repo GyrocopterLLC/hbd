@@ -35,9 +35,9 @@ void spi_init(void)
 	gpio_pinmode(FLASH_SPI_PORT, SPI_MOSI_PIN, GPIO_AlternateFunction);
 	gpio_pinmode(FLASH_SPI_PORT, SPI_MISO_PIN, GPIO_AlternateFunction);
 	gpio_pinmode(FLASH_SPI_PORT, SPI_CLK_PIN, GPIO_AlternateFunction);
-	gpio_af(FLASH_SPI_PORT, SPI_MOSI_PIN, GPIO_AF0_SPI1);
-	gpio_af(FLASH_SPI_PORT, SPI_MISO_PIN, GPIO_AF0_SPI1);
-	gpio_af(FLASH_SPI_PORT, SPI_CLK_PIN, GPIO_AF0_SPI1);
+	gpio_af(FLASH_SPI_PORT, SPI_MOSI_PIN, FLASH_AF);
+	gpio_af(FLASH_SPI_PORT, SPI_MISO_PIN, FLASH_AF);
+	gpio_af(FLASH_SPI_PORT, SPI_CLK_PIN, FLASH_AF);
 
 	gpio_pinmode(FLASH_CS_PORT, FLASH_CS_PIN, GPIO_Output);
 

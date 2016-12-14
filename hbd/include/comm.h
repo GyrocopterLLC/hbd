@@ -18,7 +18,7 @@
 #define COMM_TX_PIN				6//GPIO_PIN_6
 #define COMM_RX_PIN				7//GPIO_PIN_7
 #define COMM_PORT				GPIOB
-#define COMM_AF					GPIO_AF0_USART1
+#define COMM_AF					((uint8_t)0x00)
 
 #define COMM_USART				USART1
 

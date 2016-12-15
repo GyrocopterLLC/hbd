@@ -27,15 +27,18 @@
 #define COMM_BAUDRATE			115200
 #define COMM_BAUD_REG			417 //(48MHz / baudrate)
 #define COMM_BUFFER_LENGTH		64
+#define COMM_TXMT_TIMEOUT		100 // ms
 
-
-/*####################### Communication Format ######################*/
-
-/**
- * [Start byte][Variable code][Format byte]{4 byte data payload}[Stop byte]
- */
+typedef struct
+{
+    uint8_t Buffer[COMM_BUFFER_LENGTH];
+    uint8_t RdPos, WrPos;
+    uint8_t Done;
+} CommBuffer_Type;
 
 void comm_init(void);
 void comm_IRQCallback(void);
+uint8_t comm_recv(uint8_t* buf, uint8_t count);
+uint8_t comm_txmt(uint8_t* buf, uint8_t count);
 
 #endif /* COMM_H_ */

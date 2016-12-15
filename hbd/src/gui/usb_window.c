@@ -7,6 +7,7 @@
 
 #include "stm32f0xx.h"
 #include "gui_windows.h"
+#include "comm.h"
 
 #define NUM_USB_VARIABLES	10
 char* usb_variables[NUM_USB_VARIABLES] = {"Ia","Ib","Ic","Ta","Tb","Tc","Throttle","Ramp","HallAngle","HallSpeed"};
@@ -83,6 +84,7 @@ void destroyUSBWindow(void)
 
 void usbWindowCallback(uint8_t buttonNum)
 {
+	uint8_t sendBuf[8];
 	if(buttonNum == USB_BACK_BUTTON)
 	{
 		// Time to move to the next window!
@@ -91,6 +93,18 @@ void usbWindowCallback(uint8_t buttonNum)
 	if(buttonNum == USB_SUBMIT_BUTTON)
 	{
 		gfx_puts_f(5,160,"Submitted!",(uint8_t*)"Lato20.fnt",MTL_BLACK);
+		for(uint8_t i = 0; i < NUM_USB_VARIABLES; i++)
+		{
+			if(usb_variable_selections[i] != 0)
+			{
+				sendBuf[0] = 'U';
+				sendBuf[1] = '0' + usb_variable_selections[i];
+				sendBuf[2] = '0' + i;
+				sendBuf[3] = 0x0D; // \r
+				sendBuf[4] = 0x0A; // \n
+				comm_txmt(sendBuf,5);
+			}
+		}
 	}
 	if(buttonNum == USB_RESET_BUTTON)
 	{

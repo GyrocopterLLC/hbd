@@ -31,7 +31,7 @@ void comm_init(void)
 	gpio_af(COMM_PORT,COMM_RX_PIN,COMM_AF);
 
 	// Set up the USART peripheral
-	COMM_USART->CR1 = USART_CR1_RE | USART_CR1_RXNEIE;
+	COMM_USART->CR1 = USART_CR1_RE | USART_CR1_RXNEIE | USART_CR1_TE;
 	COMM_USART->CR2 = 0;
 	COMM_USART->CR3 = 0;
 	COMM_USART->BRR = COMM_BAUD_REG;
@@ -75,6 +75,8 @@ uint8_t comm_recv(uint8_t* buf, uint8_t count)
 		if(s_RxBuffer.RdPos > COMM_BUFFER_LENGTH)
 			s_RxBuffer.RdPos = 0;
 	}
+	// Clear "done" flag if no more bytes to read
+	if(count >= buffer_remaining) s_RxBuffer.Done = 0;
 	// Return the number of read bytes.
 	return place;
 }
@@ -106,7 +108,7 @@ uint8_t comm_txmt(uint8_t* buf, uint8_t count)
 
 
 		COMM_USART->TDR = s_TxBuffer.Buffer[s_TxBuffer.RdPos++];
-		COMM_USART->CR1 |= (USART_CR1_TE | USART_CR1_TXEIE);
+		COMM_USART->CR1 |= (USART_CR1_TXEIE);
 		s_TxBuffer.Done = 0;
 	}
 	else
@@ -179,7 +181,7 @@ void comm_IRQCallback(void)
 	if( ((COMM_USART->CR1 & USART_CR1_TCIE) != 0) && ((COMM_USART->ISR & USART_ISR_TC) != 0) )
 	{
 		// Trasmission complete, turn off the transmitter and the interrupt
-		COMM_USART->CR1 &= ~(USART_CR1_TE | USART_CR1_TCIE);
+		COMM_USART->CR1 &= ~(USART_CR1_TCIE);
 		// Clear the flag
 		COMM_USART->ICR |= USART_ICR_TCCF;
 	}

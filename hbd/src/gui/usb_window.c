@@ -10,7 +10,8 @@
 #include "comm.h"
 
 #define NUM_USB_VARIABLES	10
-char* usb_variables[NUM_USB_VARIABLES] = {"Ia","Ib","Ic","Ta","Tb","Tc","Throttle","Ramp","HallAngle","HallSpeed"};
+char* usb_variables[NUM_USB_VARIABLES] = {"Ia","Ib","Ic","Ta","Tb","Tc","Throttle","RampAngle","HallAngle","HallSpeed"};
+uint8_t usb_vars_length[NUM_USB_VARIABLES] = {2, 2, 2, 2, 2, 2, 8, 9, 9, 9};
 uint8_t usb_variable_selections[NUM_USB_VARIABLES];
 
 GUI_BUTTON usb_button_list[USB_NUM_BUTTONS];
@@ -84,7 +85,7 @@ void destroyUSBWindow(void)
 
 void usbWindowCallback(uint8_t buttonNum)
 {
-	uint8_t sendBuf[8];
+	uint8_t sendBuf;
 	if(buttonNum == USB_BACK_BUTTON)
 	{
 		// Time to move to the next window!
@@ -97,12 +98,20 @@ void usbWindowCallback(uint8_t buttonNum)
 		{
 			if(usb_variable_selections[i] != 0)
 			{
-				sendBuf[0] = 'U';
-				sendBuf[1] = '0' + usb_variable_selections[i];
-				sendBuf[2] = '0' + i;
-				sendBuf[3] = 0x0D; // \r
-				sendBuf[4] = 0x0A; // \n
-				comm_txmt(sendBuf,5);
+				comm_txmt("MCU+USB",7);
+				sendBuf = '0' + usb_variable_selections[i];
+				comm_txmt(&sendBuf,1);
+				sendBuf = '=';
+				comm_txmt(&sendBuf,1);
+				comm_txmt(usb_variables[i],usb_vars_length[i]);
+				sendBuf = '\n';
+				comm_txmt(&sendBuf,1);
+				//sendBuf[0] = 'U';
+				//sendBuf[1] = '0' + usb_variable_selections[i];
+				//sendBuf[2] = '0' + i;
+				//sendBuf[3] = 0x0D; // \r
+				//sendBuf[4] = 0x0A; // \n
+				//comm_txmt(sendBuf,5);
 			}
 		}
 	}
